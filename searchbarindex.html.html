@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaa Jaipur</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f2ec;
+            text-align: center;
+            padding: 50px;
+        }
+        .search-container {
+            max-width: 500px;
+            margin: auto;
+            position: relative;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #d4a373;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            padding-right: 40px;
+        }
+        .clear-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #d4a373;
+            display: none;
+        }
+        .suggestions {
+            position: absolute;
+            width: 100%;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            display: none;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .suggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestions div:hover {
+            background: #f0e6d2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Search Bar</h2>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search in Adaa Jaipur Store" onkeyup="showSuggestions(); toggleClearIcon();">
+        <span class="clear-icon" id="clear-icon" onclick="clearSearch()">&times;</span>
+        <div class="suggestions" id="suggestions"></div>
+    </div>
+    
+    <script>
+        const items = ["Saree", "Kurta", "Lehenga", "Sherwani", "Dupatta", "Anarkali", "Jodhpuri Suit", "Bangles", "Jhumka", "Chikankari", "Salwar Kameez", "Patiala", "Bandhani", "Ghagra"];
+        
+        function showSuggestions() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let suggestionBox = document.getElementById("suggestions");
+            suggestionBox.innerHTML = "";
+            if (input) {
+                let filteredItems = items.filter(item => item.toLowerCase().includes(input));
+                filteredItems.forEach(item => {
+                    let div = document.createElement("div");
+                    div.innerHTML = item;
+                    div.onclick = () => { document.getElementById("search").value = item; suggestionBox.style.display = 'none'; toggleClearIcon(); };
+                    suggestionBox.appendChild(div);
+                });
+                suggestionBox.style.display = "block";
+            } else {
+                suggestionBox.style.display = "none";
+            }
+        }
+        
+        function clearSearch() {
+            document.getElementById("search").value = "";
+            document.getElementById("suggestions").style.display = "none";
+            toggleClearIcon();
+        }
+        
+        function toggleClearIcon() {
+            let searchInput = document.getElementById("search");
+            let clearIcon = document.getElementById("clear-icon");
+            if (searchInput.value.length > 0) {
+                clearIcon.style.display = "block";
+            } else {
+                clearIcon.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
